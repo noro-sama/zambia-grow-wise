@@ -16,7 +16,7 @@ const STYLES = {
   risk: { cls: "bg-alert-risk text-alert-risk-foreground", Icon: ShieldAlert },
 };
 
-export function AlertBanner({ weather }: { weather?: WeatherData }) {
+export function AlertBanner({ weather }: { weather?: WeatherData | undefined }) {
   const a = alertFor(weather);
   const { cls, Icon } = STYLES[a.level];
   return (

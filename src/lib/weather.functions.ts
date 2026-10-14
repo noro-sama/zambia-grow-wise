@@ -17,7 +17,7 @@ function demoWeather(city: string): WeatherData {
   return {
     city,
     temp: 26 + (h % 9),
-    description: ["clear sky", "few clouds", "scattered clouds", "light rain"][h % 4],
+    description: ["clear sky", "few clouds", "scattered clouds", "light rain"][h % 4]!,
     humidity: 30 + (h % 40),
     rainChance: (h * 7) % 85,
     demo: true,
@@ -27,7 +27,7 @@ function demoWeather(city: string): WeatherData {
 export const getWeather = createServerFn({ method: "GET" })
   .inputValidator((input) => z.object({ city: z.string().min(1).max(60) }).parse(input))
   .handler(async ({ data }): Promise<WeatherData> => {
-    const key = process.env.OPENWEATHER_API_KEY || "111222333444";
+    const key = process.env["OPENWEATHER_API_KEY"] || "111222333444";
     try {
       const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(
         data.city,
