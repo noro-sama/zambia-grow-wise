@@ -23,7 +23,7 @@ const levelCls: Record<Level, string> = {
 };
 
 function Crops() {
-  const [open, setOpen] = useState<string | null>(CROPS[0].id);
+  const [open, setOpen] = useState<string | null>(CROPS[0]!.id);
   return (
     <AppShell>
       <h1 className="font-display text-3xl font-bold">Crop Advisor</h1>

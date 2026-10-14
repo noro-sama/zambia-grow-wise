@@ -76,9 +76,9 @@ export function alertFor(w?: WeatherData | undefined): { level: AlertLevel; titl
 
 export function recommendCrop(w?: WeatherData | undefined): Crop {
   const a = alertFor(w).level;
-  if (a === "risk") return CROPS[0];
-  if (a === "caution") return CROPS[1];
-  return CROPS[2];
+  if (a === "risk") return CROPS[0]!;
+  if (a === "caution") return CROPS[1]!;
+  return CROPS[2]!;
 }
 
 export const RAINFALL = [
