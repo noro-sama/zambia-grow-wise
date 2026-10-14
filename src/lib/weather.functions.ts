@@ -27,7 +27,7 @@ function demoWeather(city: string): WeatherData {
 export const getWeather = createServerFn({ method: "GET" })
   .inputValidator((input) => z.object({ city: z.string().min(1).max(60) }).parse(input))
   .handler(async ({ data }): Promise<WeatherData> => {
-    const key = process.env["OPENWEATHER_API_KEY"] || "111222333444";
+    const key = process.env["OPENWEATHER_API_KEY"] || "4ed6130646674bb8c62e5334015c2b30";
     try {
       const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(
         data.city,
