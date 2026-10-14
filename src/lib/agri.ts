@@ -57,7 +57,7 @@ export const DISTRICTS = [
 
 export type AlertLevel = "good" | "caution" | "risk";
 
-export function alertFor(w?: WeatherData): { level: AlertLevel; title: string; message: string } {
+export function alertFor(w?: WeatherData | undefined): { level: AlertLevel; title: string; message: string } {
   if (!w) return { level: "caution", title: "Checking conditions…", message: "Loading the latest weather." };
   if (w.rainChance < 25 && w.temp >= 30)
     return {
@@ -74,7 +74,7 @@ export function alertFor(w?: WeatherData): { level: AlertLevel; title: string; m
   return { level: "good", title: "Good conditions for planting", message: "Rains look steady. A good time to prepare your fields." };
 }
 
-export function recommendCrop(w?: WeatherData): Crop {
+export function recommendCrop(w?: WeatherData | undefined): Crop {
   const a = alertFor(w).level;
   if (a === "risk") return CROPS[0];
   if (a === "caution") return CROPS[1];

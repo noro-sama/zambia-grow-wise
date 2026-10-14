@@ -31,7 +31,7 @@ export function AlertBanner({ weather }: { weather?: WeatherData }) {
   );
 }
 
-export function WeatherCard({ weather, loading }: { weather?: WeatherData; loading: boolean }) {
+export function WeatherCard({ weather, loading }: { weather?: WeatherData | undefined; loading: boolean }) {
   return (
     <Card>
       <div className="flex items-baseline justify-between">

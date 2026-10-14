@@ -43,6 +43,6 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Card({ children, className = "" }: { children: ReactNode; className?: string | undefined }) {
   return <section className={`rounded-2xl border border-border bg-card p-5 shadow-card ${className}`}>{children}</section>;
 }
