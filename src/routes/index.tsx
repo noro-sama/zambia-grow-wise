@@ -1,24 +1,47 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Sparkles, CalendarDays } from "lucide-react";
+import { AppShell, Card } from "@/components/AppShell";
+import { AlertBanner, WeatherCard, useWeather } from "@/components/WeatherWidgets";
+import { RainfallChart } from "@/components/RainfallChart";
+import { recommendCrop } from "@/lib/agri";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "AgriSense Zambia — Climate-smart farming dashboard" },
+      { name: "description", content: "Weather alerts and El Niño-aware crop advice for Zambian smallholder farmers." },
+      { property: "og:title", content: "AgriSense Zambia — Climate-smart farming" },
+      { property: "og:description", content: "Weather alerts and El Niño-aware crop advice for Zambian farmers." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const { data, isLoading } = useWeather("Lusaka");
+  const crop = recommendCrop(data);
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <AppShell>
+      <AlertBanner weather={data} />
+      <WeatherCard weather={data} loading={isLoading} />
+      <Card className="border-2 border-primary">
+        <div className="flex items-center gap-2 text-primary">
+          <Sparkles className="h-7 w-7" aria-hidden />
+          <h2 className="font-display text-2xl font-bold">AI Recommendation</h2>
+        </div>
+        <p className="mt-3 text-xl leading-relaxed">
+          Based on current El Niño patterns, we recommend planting{" "}
+          <strong className="text-primary">{crop.emoji} {crop.name}</strong>.
+        </p>
+        <p className="mt-3 flex items-center gap-2 text-lg">
+          <CalendarDays className="h-6 w-6 text-earth" aria-hidden />
+          Best planting window: <strong>{crop.planting}</strong>
+        </p>
+        <Link to="/crops" className="mt-4 inline-block rounded-xl bg-primary px-5 py-3 text-lg font-bold text-primary-foreground">
+          See all crops
+        </Link>
+      </Card>
+      <RainfallChart />
+    </AppShell>
   );
 }
